@@ -10,10 +10,11 @@ import {
   type LanguageModel,
   type ModelMessage,
 } from "ai";
-import { tools } from "./tools";
+import { buildTools } from "./tools";
 import { SYSTEM_PROMPT } from "./system-prompt";
 import { ExcalidrawElement } from "./schema";
 import { serializeCanvasState } from "./context/canvas-state";
+import process from "node:process";
 
 interface AgentArgs {
   model: LanguageModel;
@@ -45,7 +46,7 @@ export function streamAgent({
     model,
     system: buildSystem(system, canvasState),
     messages,
-    tools,
+    tools: buildTools(process.env),
     stopWhen: stepCountIs(maxSteps),
   });
 }
@@ -63,7 +64,7 @@ export async function runAgent({
     model,
     system,
     messages,
-    tools,
+    tools: buildTools(process.env),
     stopWhen: stepCountIs(maxSteps),
   });
   return {
