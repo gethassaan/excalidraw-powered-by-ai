@@ -13,6 +13,7 @@
     "@ai-sdk/openai": "^3.0.62",
     "@cloudflare/ai-chat": "^0.6.2",
     "@excalidraw/excalidraw": "^0.18.0",
+    "@toon-format/toon": "^2.2.0",
     "agents": "^0.12.3",
     "ai": "^6.0.175",
     "react": "^19.0.0",

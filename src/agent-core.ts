@@ -12,6 +12,8 @@ import {
 } from "ai";
 import { tools } from "./tools";
 import { SYSTEM_PROMPT } from "./system-prompt";
+import { ExcalidrawElement } from "./schema";
+import { serializeCanvasState } from "./context/canvas-state";
 
 interface AgentArgs {
   model: LanguageModel;
@@ -19,21 +21,29 @@ interface AgentArgs {
   // Seed canvas state for the headless simulator. The eval passes this so
   // modify cases can be scored against the post application canvas. The
   // worker leaves it undefined; the browser handles the real mutation.
-  canvasState?: any[];
+  canvasState?: ExcalidrawElement[];
   system?: string;
   maxSteps?: number;
+}
+
+function buildSystem(
+  base: string,
+  canvasState: ExcalidrawElement[] | undefined,
+): string {
+  return `${base}\n\n# Current canvas state\n\n${serializeCanvasState(canvasState ?? [])}`;
 }
 
 // Streaming variant. Used by the worker for the live chat experience.
 export function streamAgent({
   model,
   messages,
+  canvasState,
   system = SYSTEM_PROMPT,
   maxSteps = 5,
 }: AgentArgs) {
   return streamText({
     model,
-    system,
+    system: buildSystem(system, canvasState),
     messages,
     tools,
     stopWhen: stepCountIs(maxSteps),
