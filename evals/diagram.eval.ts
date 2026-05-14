@@ -19,6 +19,10 @@ import { schemaScorer, type AgentOutput } from "./scorers/schema";
 import { structureScorer } from "./scorers/structure";
 import { preservationScorer } from "./scorers/preservation";
 import { labelKeywordScorer } from "./scorers/labelKeyword";
+import { boundArrowsScorer } from "./scorers/boundArrows";
+import { boundLabelsScorer } from "./scorers/boundLabels";
+import { connectivityScorer } from "./scorers/connectivity";
+import { toolChoiceScorer } from "./scorers/toolChoice";
 
 config({ path: ".dev.vars" });
 
@@ -44,7 +48,6 @@ Eval<GoldenTestCase, AgentOutput, GoldenTestCase>("Diagram Agent", {
     const result = await runAgent({
       model: openai("gpt-5.4-mini"),
       messages: buildMessages(testCase),
-      canvasState: testCase.seed?.elements ?? ([] as any),
     });
     return { text: result.text, elements: result.elements };
   },
@@ -54,5 +57,9 @@ Eval<GoldenTestCase, AgentOutput, GoldenTestCase>("Diagram Agent", {
     structureScorer,
     preservationScorer,
     labelKeywordScorer,
+    boundArrowsScorer,
+    boundLabelsScorer,
+    connectivityScorer,
+    toolChoiceScorer,
   ],
 });

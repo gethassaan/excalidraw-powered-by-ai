@@ -13,7 +13,11 @@ import { updateElements } from "./tools/update-elements";
 import { queryCanvas } from "./tools/query-canvas";
 import { makeSearchWeb } from "./tools/search-web";
 
-export function buildTools(env: { TAVILY_API_KEY?: string }) {
+export interface ToolEnv {
+  TAVILY_API_KEY?: string;
+}
+
+export function buildTools(env: ToolEnv) {
   return {
     addElements,
     removeElements,
