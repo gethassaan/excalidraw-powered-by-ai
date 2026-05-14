@@ -15,6 +15,8 @@ import { buildTools } from "./tools";
 import { SYSTEM_PROMPT } from "./system-prompt";
 import { serializeCanvasState } from "./context/canvas-state";
 import z from "zod";
+import { applySkeleton } from "./context/applySkeleton";
+import { findOverlaps } from "./context/overlaps";
 
 interface AgentArgs {
   model: LanguageModel;
@@ -78,8 +80,19 @@ export async function runAgent({
       description: baseTools.addElements.description,
       inputSchema: baseTools.addElements.inputSchema as never,
       execute: async ({ elements }: { elements: unknown[] }) => {
-        for (const el of elements) sim.push({ ...(el as object) });
-        return { elements };
+        // Run the model output through applySkeleton so the simulated canvas
+        // matches what convertToExcalidrawElements would produce in the live
+        // app: shape labels become child text elements with containerId,
+        // arrow start/end shorthand becomes startBinding/endBinding. Without
+        // this, the eval scorers read raw model claims and not what the
+        // canvas would actually render.
+        const runtime = applySkeleton(elements as Record<string, unknown>[]);
+        for (const el of runtime) sim.push({ ...el });
+        // Surface overlaps in the tool result so the agent loop sees
+        // collisions immediately and can self correct via updateElements.
+        // Same finding the noOverlaps scorer would report on this scene.
+        const overlaps = findOverlaps(sim);
+        return { added: runtime.length, overlaps };
       },
     }),
     updateElements: tool({
