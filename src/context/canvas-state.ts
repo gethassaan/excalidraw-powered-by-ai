@@ -8,6 +8,8 @@
 // latest user message, runs it through this function, and appends the
 // result to the system prompt.
 
+import { findOverlaps } from "./overlaps";
+
 interface ElementLike {
   id?: unknown;
   type?: unknown;
@@ -113,5 +115,13 @@ export function serializeCanvasState(elements: unknown[]): string {
     .map(([type, n]) => `${n} ${type}${n === 1 ? "" : "s"}`)
     .join(", ");
 
-  return `Canvas contains ${summary}:\n${lines.join("\n")}`;
+  const overlaps = findOverlaps(elements);
+  const overlapLines =
+    overlaps.length > 0
+      ? `\n\nOverlapping elements (these collide on the canvas, fix them):\n${overlaps
+          .map(([a, b]) => `- ${a} ↔ ${b}`)
+          .join("\n")}`
+      : "";
+
+  return `Canvas contains ${summary}:\n${lines.join("\n")}${overlapLines}`;
 }

@@ -23,6 +23,7 @@ import { boundArrowsScorer } from "./scorers/boundArrows";
 import { boundLabelsScorer } from "./scorers/boundLabels";
 import { connectivityScorer } from "./scorers/connectivity";
 import { toolChoiceScorer } from "./scorers/toolChoice";
+import { noOverlapsScorer } from "./scorers/noOverlaps";
 
 config({ path: ".dev.vars" });
 
@@ -65,5 +66,6 @@ Eval<GoldenTestCase, AgentOutput, GoldenTestCase>("Diagram Agent", {
     boundLabelsScorer,
     connectivityScorer,
     toolChoiceScorer,
+    noOverlapsScorer,
   ],
 });

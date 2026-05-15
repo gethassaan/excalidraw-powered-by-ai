@@ -11,6 +11,7 @@ import Canvas from "./components/Canvas";
 import ChatPanel from "./components/chat/ChatPanel";
 import { serializeCanvasState } from "./context/canvas-state";
 import "./App.css";
+import { findOverlaps } from "./context/overlaps";
 
 // One agent instance per page load. The canvas state lives only in the
 // browser, so persisting chat history across refreshes would leave a dead
@@ -93,9 +94,14 @@ export default function App() {
           captureUpdate: CaptureUpdateAction.IMMEDIATELY,
         });
         api.scrollToContent(next, { fitToContent: true });
+        // Detect overlaps in the post-add scene and surface them in the
+        // tool result so the agent's next reasoning step sees collisions
+        // and can self correct via updateElements. Same finding the
+        // noOverlaps eval scorer would report.
+        const overlaps = findOverlaps(next as unknown[]);
         addToolOutput({
           toolCallId: toolCall.toolCallId,
-          output: { added: newOnes.length },
+          output: { added: newOnes.length, overlaps },
         });
         return;
       }
