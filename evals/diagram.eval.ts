@@ -49,7 +49,11 @@ Eval<GoldenTestCase, AgentOutput, GoldenTestCase>("Diagram Agent", {
       model: openai("gpt-5.4-mini"),
       messages: buildMessages(testCase),
     });
-    return { text: result.text, elements: result.elements };
+    return {
+      text: result.text,
+      elements: result.elements,
+      toolCalls: result?.toolCalls ?? [],
+    };
   },
 
   scores: [

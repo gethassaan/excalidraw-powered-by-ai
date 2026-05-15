@@ -7,13 +7,15 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "eval": "dotenv -e .dev.vars -- braintrust eval evals/diagram.eval.ts"
+    "eval": "dotenv -e .dev.vars -- braintrust eval evals/diagram.eval.ts",
+    "embed": "dotenv -e .dev.vars -- tsx src/rag/embed.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.62",
     "@cloudflare/ai-chat": "^0.6.2",
     "@excalidraw/excalidraw": "^0.18.0",
     "@toon-format/toon": "^2.2.0",
+    "@upstash/vector": "^1.2.3",
     "agents": "^0.12.3",
     "ai": "^6.0.175",
     "react": "^19.0.0",
@@ -23,7 +25,7 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.0.0",
     "@cloudflare/workers-types": "^4.0.0",
-    "@types/node": "^25.7.0",
+    "@types/node": "^25.8.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.0.0",

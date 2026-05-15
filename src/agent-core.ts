@@ -134,6 +134,7 @@ export async function runAgent({
       execute: async () => ({ summary: serializeCanvasState(sim) }),
     }),
     searchWeb: baseTools.searchWeb,
+    internalKnowledgeSearch: baseTools.internalKnowledgeSearch,
   };
 
   const result = await generateText({

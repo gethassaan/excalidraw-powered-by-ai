@@ -12,7 +12,7 @@ This project explores how to build and improve an AI-powered diagramming agent t
 - Control an Excalidraw canvas through structured tool calls
 - Read and update live canvas state
 - Use web search for fresh information
-- Use RAG over a private knowledge base for grounded answers
+- Use RAG over a internal knowledge base for grounded answers
 - Stream responses, show tool activity, and support approval flows
 - Be evaluated and iteratively improved with AI engineering practices
 

@@ -22,6 +22,7 @@ const VALID_TYPES = [
 export interface AgentOutput {
   text: string;
   elements: unknown[];
+  toolCalls: string[];
 }
 
 export const schemaScorer: EvalScorer<

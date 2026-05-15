@@ -31,7 +31,7 @@ interface TavilyResponse {
 
 export function makeSearchWeb(apiKey: string | undefined) {
   return tool({
-    description: `Search the web for current information. Use this when the user asks about recent technology, frameworks, services, or systems where you may not have up to date knowledge — for example "draw an architecture diagram of how Cloudflare Workers handle requests" should trigger a search before you start drawing.
+    description: `if the contents is not found in the internal knowledge base, search the web for current information. Use this when the user asks about recent technology, frameworks, services, or systems where you may not have up to date knowledge — for example "draw an architecture diagram of how Cloudflare Workers handle requests" should trigger a search before you start drawing.
 
 Example: searchWeb({ query: "how Cloudflare Workers handle incoming requests", maxResults: 5 })`,
     inputSchema: z.object({
