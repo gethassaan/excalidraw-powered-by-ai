@@ -2,3 +2,8 @@
 # cp .dev.vars.example .dev.vars
 
 OPENAI_API_KEY=your-openai-api-key-here
+AI_GATEWAY_API_KEY=your-openai-api-key-here
+BRAINTRUST_API_KEY=your-openai-api-key-here
+TAVILY_API_KEY=your-openai-api-key-here
+UPSTASH_VECTOR_REST_URL=your-openai-api-key-here
+UPSTASH_VECTOR_REST_TOKEN=your-openai-api-key-here
